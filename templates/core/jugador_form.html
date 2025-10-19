@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Nuevo Jugador{% endblock %}
+
+{% block content %}
+<h1>Nuevo Jugador</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <table class="table-wrap" >
+      {{ form.as_table }}
+    </table>
+    <button type="submit" class="btn">Guardar</button>
+    <a href="{% url 'jugadores_list' %}" class="btn">Cancelar</a>
+</form>
+{% endblock %}
+

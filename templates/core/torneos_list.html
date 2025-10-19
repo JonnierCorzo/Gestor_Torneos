@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Torneos{% endblock %}
+{% block content %}
+  <h1>Torneos</h1>
+
+  <form method="get" style="margin: 1rem 0;">
+    <input type="search" name="q" value="{{ q }}" placeholder="Buscar por nombre…" />
+    <button type="submit" class="btn">Buscar</button>
+    <a href="{% url 'torneos_list' %}" class="btn">Limpiar</a>
+  </form>
+
+  {% if torneos %}
+    <table class="table-wrap">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Ubicación</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in torneos %}
+          <tr>
+            <td><a href="{% url 'torneo_detail' t.pk %}">{{ t.nombre }}</a></td>
+            <td>{{ t.fecha_inicio }}</td>
+            <td>{{ t.fecha_fin|default:"—" }}</td>
+            <td>{{ t.ubicacion|default:"—" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay torneos aún. <a href="{% url 'torneo_create' %}">Crea el primero</a>.</p>
+  {% endif %}
+{% endblock %}

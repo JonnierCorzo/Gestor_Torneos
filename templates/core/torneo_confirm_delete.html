@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{% if modo == "editar" %}Editar Torneo{% else %}Nuevo Torneo{% endif %}{% endblock %}
+{% block content %}
+  <h1>{% if modo == "editar" %}Editar Torneo{% else %}Nuevo Torneo{% endif %}</h1>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <table class="table-wrap">
+      {{ form.as_table }}
+    </table>
+    <p>
+      <button type="submit" class="btn">{% if modo == "editar" %}Guardar cambios{% else %}Guardar{% endif %}</button>
+      <a href="{% url 'torneos_list' %}" class="btn">Cancelar</a>
+      {% if modo == "editar" %}
+        <a href="{% url 'torneo_delete' torneo.pk %}" class="btn">Eliminar…</a>
+      {% endif %}
+    </p>
+  </form>
+{% endblock %}

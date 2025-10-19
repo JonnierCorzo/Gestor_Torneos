@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Gestor de Torneos{% endblock %}</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    nav { margin-bottom: 1.5rem; }
+    nav a { margin-right: 1rem; text-decoration: none; color: #333; }
+    nav a:hover { text-decoration: underline; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { padding: .5rem; border-bottom: 1px solid #ddd; text-align: left; }
+    input[type="search"] { padding: .4rem; }
+    .btn {
+      display: inline-block;
+      padding: .5rem .8rem;
+      border: 1px solid #ccc;
+      border-radius: .3rem;
+      text-decoration: none;
+      background-color: #f8f8f8;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background-color: #e8e8e8;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'home' %}">Inicio</a>
+    <a href="{% url 'torneos_list' %}">Torneos</a>
+    <a href="{% url 'equipos_list' %}">Equipos</a>
+    <a href="{% url 'jugadores_list' %}">Jugadores</a>
+    <a href="{% url 'partidos_list' %}">Partidos</a>
+    <a class="btn" href="{% url 'torneo_create' %}">+ Nuevo Torneo</a>
+
+    <span style="margin-left:1rem;"></span>
+    {% if user.is_authenticated %}
+      Hola, {{ user.username }} |
+      <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="background:none; border:none; padding:0; color:#00f; cursor:pointer;">Salir</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">Iniciar sesión</a>
+    {% endif %}
+  </nav>
+
+  {% if messages %}
+    <ul style="list-style:none; padding:0;">
+      {% for message in messages %}
+        <li style="margin:.5rem 0; padding:.6rem .8rem; border:1px solid #ddd; border-radius:.4rem; background:#f9f9f9;">
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

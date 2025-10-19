@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Jugadores{% endblock %}
+
+{% block content %}
+<h1>Jugadores</h1>
+
+<form method="get">
+  <label>Torneo:</label>
+  <select name="torneo" onchange="this.form.submit()">
+    <option value="">Todos</option>
+    {% for t in torneos %}
+      <option value="{{ t.id }}" {% if torneo_id == t.id|stringformat:"s" %}selected{% endif %}>
+        {{ t.nombre }}
+      </option>
+    {% endfor %}
+  </select>
+
+  <label>Equipo:</label>
+  <select name="equipo" onchange="this.form.submit()">
+    <option value="">Todos</option>
+    {% for e in equipos %}
+      <option value="{{ e.id }}" {% if equipo_id == e.id|stringformat:"s" %}selected{% endif %}>
+        {{ e.nombre }} {% if not torneo_id %}— {{ e.torneo.nombre }}{% endif %}
+      </option>
+    {% endfor %}
+  </select>
+
+  <a class="btn" href="{% url 'jugador_create' %}{% if torneo_id or equipo_id %}?{% if torneo_id %}torneo={{ torneo_id }}{% endif %}{% if torneo_id and equipo_id %}&{% endif %}{% if equipo_id %}equipo={{ equipo_id }}{% endif %}{% endif %}">
+    + Nuevo Jugador
+  </a>
+</form>
+
+<table class="table-wrap">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Equipo</th>
+      <th>Torneo</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for j in jugadores %}
+      <tr>
+        <td>{{ j.nombre }}</td>
+        <td>{{ j.equipo.nombre }}</td>
+        <td>{{ j.equipo.torneo.nombre }}</td>
+        <td>{{ j.email|default:"—" }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">Sin jugadores.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

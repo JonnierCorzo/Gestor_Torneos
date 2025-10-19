@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo/Editar Equipo{% endblock %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Editar Equipo{% else %}Nuevo Equipo{% endif %}</h1>
+
+{% if form.non_field_errors %}
+    <ul>
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <table class="table-wrap">
+        <tr>
+            <th>Torneo:</th>
+            <td>
+                {{ form.torneo }}
+                {% for error in form.torneo.errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <th>Nombre del equipo:</th>
+            <td>
+                {{ form.nombre }}
+                {% for error in form.nombre.errors %}
+                    <div>{{ error }}</div>
+                {% endfor %}
+            </td>
+        </tr>
+    </table>
+
+    <button type="submit">
+        {% if form.instance.pk %}Guardar cambios{% else %}Guardar{% endif %}
+    </button>
+    <a href="{% url 'torneos_list' %}">Cancelar</a>
+</form>
+
+<p>* Máximo 20 equipos por torneo.</p>
+{% endblock %}

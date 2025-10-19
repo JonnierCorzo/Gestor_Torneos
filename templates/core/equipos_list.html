@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Equipos{% endblock %}
+
+{% block content %}
+<h1>Equipos</h1>
+
+<form method="get">
+  <label>Filtrar por torneo:</label>
+  <select name="torneo" onchange="this.form.submit()">
+    <option value="">Todos</option>
+    {% for t in torneos %}
+      <option value="{{ t.id }}" {% if torneo_id|stringformat:"s" == t.id|stringformat:"s" %}selected{% endif %}>
+        {{ t.nombre }}
+      </option>
+    {% endfor %}
+  </select>
+  <a href="{% url 'equipo_create' %}{% if torneo_id %}?torneo={{ torneo_id }}{% endif %}" class="btn">+ Nuevo Equipo</a>
+</form>
+
+<table class="table-wrap" >
+  <thead>
+    <tr>
+      <th>Equipo</th>
+      <th>Torneo</th>
+      <th># Jugadores</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for e in equipos %}
+      <tr>
+        <td>{{ e.nombre }}</td>
+        <td>{{ e.torneo.nombre }}</td>
+        <td>{{ e.jugadores.count }}</td>
+        <td>
+          <a href="{% url 'equipo_update' e.pk %}" class="btn">Editar</a>
+          <a href="{% url 'equipo_delete' e.pk %}" class="btn">Eliminar</a>
+          <a href="{% url 'jugador_create' %}" class="btn">+ Jugador</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">No hay equipos.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

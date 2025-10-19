@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ torneo.nombre }}{% endblock %}
+{% block content %}
+  <h1>{{ torneo.nombre }}</h1>
+  <p><strong>Inicio:</strong> {{ torneo.fecha_inicio }}</p>
+  <p><strong>Fin:</strong> {{ torneo.fecha_fin|default:"—" }}</p>
+  <p><strong>Ubicación:</strong> {{ torneo.ubicacion|default:"—" }}</p>
+  <p><strong>Descripción:</strong><br>{{ torneo.descripcion|linebreaksbr }}</p>
+  <p><a class="btn" href="{% url 'torneos_list' %}">← Volver</a></p>
+{% endblock %}
+<p>
+  <a class="btn" href="{% url 'torneo_update' torneo.pk %}">Editar</a>
+  <a class="btn" href="{% url 'torneo_delete' torneo.pk %}">Eliminar</a>
+</p>

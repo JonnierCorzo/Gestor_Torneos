@@ -1,0 +1,266 @@
+/* ===========================
+   Tema: "Claro Moderno"
+   - variables, tipografía, nav sticky, tablas bonitas, formularios
+   - soporta dark mode con prefers-color-scheme
+   =========================== */
+
+:root {
+  /* Paleta base (claro) */
+  --bg:            #f7f8fa;
+  --card:          #ffffff;
+  --text:          #1f2937;
+  --muted:         #6b7280;
+  --primary:       #2563eb;
+  --primary-600:   #1d4ed8;
+  --primary-700:   #1e40af;
+  --border:        #e5e7eb;
+  --ring:          rgba(37, 99, 235, 0.25);
+  --success:       #16a34a;
+  --warning:       #f59e0b;
+  --danger:        #dc2626;
+
+  --radius:        12px;
+  --shadow-sm:     0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:     0 6px 18px rgba(0,0,0,.08);
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+               Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:          #0f172a;
+    --card:        #0b1222;
+    --text:        #e5e7eb;
+    --muted:       #9ca3af;
+    --primary:     #60a5fa;
+    --primary-600: #4f86d9;
+    --primary-700: #406db5;
+    --border:      #1f2937;
+    --ring:        rgba(96, 165, 250, 0.25);
+    --success:     #22c55e;
+    --warning:     #fbbf24;
+    --danger:      #ef4444;
+    --shadow-md:   0 6px 18px rgba(0,0,0,.35);
+  }
+}
+
+/* --- Reset mínimo y base --- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  padding: 0 1.25rem 2rem;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+}
+
+/* --- Contenedor opcional para centrar y limitar ancho --- */
+main { max-width: 1100px; margin: 1.2rem auto 0; }
+
+/* --- Navegación --- */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 2px);
+  box-shadow: var(--shadow-sm);
+  padding: .75rem 1rem;
+  margin: 1rem auto 1.25rem;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .6rem 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text);
+  padding: .45rem .7rem;
+  border-radius: 8px;
+  transition: background .2s ease, color .2s ease, transform .08s ease;
+}
+nav a:hover { background: rgba(0,0,0,.05); transform: translateY(-1px); }
+@media (prefers-color-scheme: dark) {
+  nav a:hover { background: rgba(255,255,255,.06); }
+}
+
+/* --- Botones --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .55rem .85rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background .2s ease, border-color .2s ease, transform .08s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn:focus { outline: none; box-shadow: 0 0 0 4px var(--ring); }
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-color: transparent;
+}
+.btn-primary:hover { background: var(--primary-600); }
+.btn-primary:active { background: var(--primary-700); transform: translateY(0); }
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+  border-color: transparent;
+}
+.btn-danger:hover { filter: brightness(.95); }
+
+/* --- Tarjetas / paneles --- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 1rem;
+}
+
+/* --- Tablas --- */
+.table-wrap {
+  overflow: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px; /* para permitir scroll horizontal en móviles */
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.03), transparent);
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  font-size: .78rem;
+  padding: .9rem .8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody td {
+  padding: .8rem .8rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+/* zebra + hover */
+tbody tr:nth-child(odd) { background: rgba(0,0,0,.02); }
+@media (prefers-color-scheme: dark) {
+  tbody tr:nth-child(odd) { background: rgba(255,255,255,.03); }
+}
+tbody tr:hover { background: rgba(37, 99, 235, .06); }
+@media (prefers-color-scheme: dark) {
+  tbody tr:hover { background: rgba(96,165,250,.12); }
+}
+
+/* --- Formularios --- */
+form table { min-width: 0; width: 100%; border-collapse: separate; border-spacing: 0 .6rem; }
+form th { text-align: left; color: var(--muted); width: 220px; font-weight: 600; }
+form td { padding: .2rem 0; }
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="datetime-local"],
+select,
+textarea {
+  width: min(480px, 100%);
+  padding: .6rem .7rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: border-color .15s ease, box-shadow .15s ease, transform .08s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+label { display: inline-block; margin-bottom: .35rem; color: var(--muted); }
+
+/* --- Mensajes flash (Django messages) --- */
+.alerts {
+  display: grid;
+  gap: .6rem;
+  margin: 1rem 0 1.2rem;
+}
+
+.alert {
+  padding: .75rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+.alert-success { border-color: color-mix(in srgb, var(--success) 35%, var(--border)); }
+.alert-warning { border-color: color-mix(in srgb, var(--warning) 35%, var(--border)); }
+.alert-danger  { border-color: color-mix(in srgb, var(--danger)  35%, var(--border)); }
+
+/* --- Utilidades pequeñas --- */
+.mt-1 { margin-top: .25rem; }
+.mt-2 { margin-top: .5rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-2 { margin-bottom: .5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.flex { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
+.space { flex: 1 1 auto; }
+
+/* --- Acciones en tablas --- */
+.table-actions a,
+.table-actions form button {
+  margin-right: .35rem;
+}
+
+/* --- Link bonito --- */
+a {
+  color: var(--primary-600);
+}
+a:hover { color: var(--primary); }
+
+/* --- Footer opcional --- */
+footer {
+  max-width: 1100px;
+  margin: 2rem auto 0;
+  padding: 1rem;
+  color: var(--muted);
+  text-align: center;
+}
+.background-img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="hero" style="background-image: url('https://tse3.mm.bing.net/th/id/OIP.Sj_ZhDkPJ76QVZmQcTu3TwHaEK?pid=Api&P=0&h=180'); 
+                         background-size: cover; 
+                         background-position: center; 
+                         height: 100vh;">
+  <div class="overlay" style="background-color: rgba(0,0,0,0.5); height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white;">
+    <h1>⚽ Bienvenido al Gestor de Torneos</h1>
+    <p>Administra torneos, equipos, jugadores y partidos en un solo lugar.</p>
+    <a href="{% url 'torneos_list' %}" class="btn btn-primary">Ver Torneos</a>
+  </div>
+</div>
+{% endblock %}

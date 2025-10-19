@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Resultado{% endblock %}
+{% block content %}
+<h1>Resultado</h1>
+<p><strong>{{ p.equipo1.nombre }}</strong> vs <strong>{{ p.equipo2.nombre }}</strong> — {{ p.torneo.nombre }}</p>
+<form method="post">
+  {% csrf_token %}
+  <label>Fecha:</label>
+  <input type="datetime-local" name="fecha" value="{% if p.fecha %}{{ p.fecha|date:'Y-m-d\\TH:i' }}{% endif %}"><br>
+  <label>Marcador {{ p.equipo1.nombre }}:</label>
+  <input type="number" name="marcador1" value="{{ p.marcador1|default:'' }}"><br>
+  <label>Marcador {{ p.equipo2.nombre }}:</label>
+  <input type="number" name="marcador2" value="{{ p.marcador2|default:'' }}"><br>
+  <button type="submit" class="btn">Guardar resultado</button>
+  <a href="{% url 'partidos_list' %}?torneo={{ p.torneo.id }}" class="btn">Cancelar</a>
+</form>
+{% endblock %}

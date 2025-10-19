@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Partidos{% endblock %}
+{% block content %}
+<h1>Partidos</h1>
+
+<form method="get">
+  <label>Torneo:</label>
+  <select name="torneo" onchange="this.form.submit()">
+    <option value="">Todos</option>
+    {% for t in torneos %}
+      <option value="{{ t.id }}" {% if torneo_id == t.id|stringformat:"s" %}selected{% endif %}>{{ t.nombre }}</option>
+    {% endfor %}
+  </select>
+
+  <label>Equipo:</label>
+  <select name="equipo" onchange="this.form.submit()">
+    <option value="">Todos</option>
+    {% for e in equipos %}
+      <option value="{{ e.id }}" {% if equipo_id == e.id|stringformat:"s" %}selected{% endif %}>
+        {{ e.nombre }}{% if not torneo_id %} — {{ e.torneo.nombre }}{% endif %}
+      </option>
+    {% endfor %}
+  </select>
+
+  <a href="{% url 'partido_create' %}{% if torneo_id %}?torneo={{ torneo_id }}{% endif %}" class="btn">+ Nuevo Partido</a>
+  {% if torneo_id %}
+    <a href="{% url 'partidos_generar' %}?torneo={{ torneo_id }}" class="btn">⚙ Generar Fixture</a>
+  {% endif %}
+</form>
+
+<table class="table-wrap">
+  <thead>
+    <tr><th>Fecha</th><th>Torneo</th><th>Equipo 1</th><th>Equipo 2</th><th>Estado</th><th>Marcador</th><th>Acciones</th></tr>
+  </thead>
+  <tbody>
+    {% for p in partidos %}
+      <tr>
+        <td>{{ p.fecha|default:"—" }}</td>
+        <td>{{ p.torneo.nombre }}</td>
+        <td>{{ p.equipo1.nombre }}</td>
+        <td>{{ p.equipo2.nombre }}</td>
+        <td>{{ p.estado }}</td>
+        <td>
+          {% if p.estado == "jugado" %}
+            {{ p.marcador1 }} - {{ p.marcador2 }}
+          {% else %}—{% endif %}
+        </td>
+        <td>
+          <a href="{% url 'partido_update' p.pk %}" class="btn">Editar</a>
+          <a href="{% url 'partido_set_resultado' p.pk %}" class="btn">Resultado</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="7">Sin partidos.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
